@@ -62,6 +62,8 @@ test.describe("E2Eflow of different products", ()=>{
 
                 await orderpage.verifyOrdercompletion();
 
+                console.log(`${productData.ProductName} purchased`);
+
                 });
 
 
