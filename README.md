@@ -21,7 +21,7 @@ Architecture: Page Object Model (POM)
 
 CI/CD: Jenkins
 
-Reporting: Playwright HTML Reports
+Reporting: Allure Reports & Playwright HTML Reports
 
 📁 Project Structure
 Based on the project architecture:
@@ -69,6 +69,11 @@ npx playwright test tests/API-tests.spec.js
 View HTML Report:
 Bash
 npx playwright show-report
+
+View Allure Report:
+Bash
+To generate: `npx allure generate ./allure-results -o ./allure-report --clean`
+To open: `npx allure open ./allure-report`
 
 🏗️ CI/CD Pipeline
 The framework is integrated into a Jenkins Pipeline. 
