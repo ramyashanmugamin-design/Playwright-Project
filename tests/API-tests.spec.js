@@ -1,5 +1,5 @@
 import {test,expect} from '@playwright/test';
-import { AuthClient } from '../API Clients/authClient';
+import { AuthClient } from '../API Clients/AuthClient';
 import { BaseClient } from '../API Clients/BaseClient';
 import fs from 'fs';
 
