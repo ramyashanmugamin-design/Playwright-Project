@@ -104,7 +104,7 @@ test("Partial Update", async ({request})=>{
 })
 
 
-test.only("Delete booking", async ({request})=>{
+test("Delete booking", async ({request})=>{
 
      const baseclient=new BaseClient(request);
 
