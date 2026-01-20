@@ -8,54 +8,70 @@ const OverviewPage =require("../Pages/OverviewPage");
 const OrderCompletionPage = require("../Pages/OrderCompletionPage")
 
 const loginData= JSON.parse(JSON.stringify(require("../TestData/LoginInfo.json")));
-const productData= JSON.parse(JSON.stringify(require("../TestData/ProductsInfo.json")));
+const productDatas= JSON.parse(JSON.stringify(require("../TestData/ProductsInfo.json")));
 const checkoutData= JSON.parse(JSON.stringify(require("../TestData/CheckoutInfo.json")));
 
-    test("E2Eflow: Product Checkout", async ({page})=>{
 
-    //Login Application
+test.describe("E2Eflow of different products", ()=>{
 
-    const loginpage=new LoginPage(page);
+    for(const productData of productDatas)
+    {
+        test.describe( `E2E flow of ${productData.ProductName}`,()=>{
 
-    await loginpage.navigate();
+             test("E2Eflow: Product Checkout", async ({page})=>{
 
-    await loginpage.checklogo();
+                //Login Application
 
-    await loginpage.login(loginData.UserName,loginData.Password);
+                const loginpage=new LoginPage(page);
 
-    //Adding Product to cart
+                await loginpage.navigate();
 
-    const products=new ProductsPage(page);
+                await loginpage.checklogo();
 
-    await products.additem(productData.ProductName);
+                await loginpage.login(loginData.UserName,loginData.Password);
 
-    await products.gotocart();
+                //Adding Product to cart
 
-    // Verifying Cart
-    
-    const cart=new CartPage(page);
+                const products=new ProductsPage(page);
 
-    await cart.checkout(productData.ProductName);
+                await products.additem(productData.ProductName);
 
-    // Entering Checkout Information
+                await products.gotocart();
 
-    const infoPage = new CheckoutInfoPage(page);
+                // Verifying Cart
+                
+                const cart=new CartPage(page);
 
-    await infoPage.entercheckoutinfo(checkoutData.FirstName,checkoutData.LastName,checkoutData.ZipCode);
+                await cart.checkout(productData.ProductName);
 
-    // Verifying and finishing checkoutprocess
+                // Entering Checkout Information
 
-    const overview = new OverviewPage(page);
+                const infoPage = new CheckoutInfoPage(page);
 
-    await overview.completeCheckout(productData.ProductName);
+                await infoPage.entercheckoutinfo(checkoutData.FirstName,checkoutData.LastName,checkoutData.ZipCode);
 
-    //  Order completion
+                // Verifying and finishing checkoutprocess
 
-    const orderpage =new OrderCompletionPage(page);
+                const overview = new OverviewPage(page);
 
-    await orderpage.verifyOrdercompletion();
+                await overview.completeCheckout(productData.ProductName);
 
-    });
+                //  Order completion
 
+                const orderpage =new OrderCompletionPage(page);
+
+                await orderpage.verifyOrdercompletion();
+
+                });
+
+
+
+        })
+
+    }
+
+})
+
+   
 
 

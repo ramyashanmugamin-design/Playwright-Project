@@ -11,7 +11,10 @@ export class AuthClient extends BaseClient
   async createToken(payload) 
   {
     const response = await this.postRequest('/auth', payload);
-    return response.token;
+
+    const jsonresponse = await response.json();
+
+    return jsonresponse.token;
   }
 
 }

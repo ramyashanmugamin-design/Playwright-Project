@@ -10,7 +10,13 @@ const baseclient=new BaseClient(request);
 
 const response = await baseclient.getRequest("/booking");
 
-console.log(response);
+await expect(response.status()).toBe(200);
+
+await expect(response.statusText()).toBe("OK");
+
+const jsonresponse = await response.json();
+
+await expect(jsonresponse.bookingid).not.toBeNull();
 
 })
 
@@ -21,6 +27,8 @@ test("Creating access token",async ({request})=>{
     const authdata= fs.readFileSync('./TestData/Authpayload.json');
 
     const token = await authclient.createToken(authdata);
+
+    await expect(token).not.toBeNull();
     
     console.log("Token is : "+token);
 
@@ -38,7 +46,16 @@ test("Create booking",async ({request})=>{
 
     const response = await baseclient.postRequest("/booking",userdata.create);
 
-    console.log(response);
+    const jsonresponse = await response.json();
+
+    console.log(jsonresponse);
+
+   await expect(jsonresponse.bookingid).not.toBeNull();
+
+   await expect(jsonresponse.booking.firstname).toBe(userdata.create.firstname);
+
+   await expect(jsonresponse.booking.lastname).toBe(userdata.create.lastname);
+
 })
 
 test("Update Booking", async ({request})=>{
@@ -60,15 +77,27 @@ test("Update Booking", async ({request})=>{
 
     const userdata=JSON.parse(data);
 
-    const booking = await baseclient.postRequest("/booking",userdata.create);
+    const response = await baseclient.postRequest("/booking",userdata.create);
+
+    const booking = await response.json();
 
     console.log("Booking details:", booking);
 
     //update booking
 
-    const updatedbooking = await baseclient.updateRequest("/booking/"+`${booking.bookingid}`,userdata.update,`${token}`);
+    const updatedresponse = await baseclient.updateRequest("/booking/"+`${booking.bookingid}`,userdata.update,`${token}`);
+
+    const updatedbooking = await updatedresponse.json();
 
     console.log("Updated values:",updatedbooking);
+
+    await expect(updatedbooking.totalprice).toBe(userdata.update.totalprice);
+
+    await expect(updatedbooking.additionalneeds).toBe(userdata.update.additionalneeds);
+
+    await expect(updatedresponse.status()).toBe(200);
+
+   await expect(updatedresponse.statusText()).toBe("OK");
 
 })
 
@@ -91,15 +120,23 @@ test("Partial Update", async ({request})=>{
 
     const userdata=JSON.parse(data);
 
-    const booking = await baseclient.postRequest("/booking",userdata.create);
+    const response = await baseclient.postRequest("/booking",userdata.create);
+
+    const booking = await response.json();
 
     console.log("Booking details:", booking);
 
     //partially update booking
 
-    const partialupdate = await baseclient.partialupdateRequest("/booking/"+`${booking.bookingid}`,userdata.Partialupdate,`${token}`);
+    const partialresponse = await baseclient.partialupdateRequest("/booking/"+`${booking.bookingid}`,userdata.Partialupdate,`${token}`);
+
+    const partialupdate = await partialresponse.json();
 
     console.log("Partially Updated values:",partialupdate);
+
+    await expect(partialresponse.status()).toBe(200);
+
+    await expect(partialresponse.statusText()).toBe("OK");
 
 })
 
@@ -123,15 +160,17 @@ test("Delete booking", async ({request})=>{
 
     const userdata=JSON.parse(data);
 
-    const booking = await baseclient.postRequest("/booking",userdata.create);
+    const response = await baseclient.postRequest("/booking",userdata.create);
+
+    const booking = await response.json();
 
     console.log("Booking details:", booking);
 
     //Delete booking
 
-    const response = await baseclient.deleteRequest("/booking/"+`${booking.bookingid}`,`${token}`);
+    const deleteresponse = await baseclient.deleteRequest("/booking/"+`${booking.bookingid}`,`${token}`);
 
-    console.log("Record Deleted: status code :",response.status());
+    console.log("Record Deleted: status code :",deleteresponse.status());
 
     // Verify whether the record is deleted
 

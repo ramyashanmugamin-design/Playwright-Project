@@ -20,9 +20,8 @@ export class BaseClient
                  "Content-Type": "application/json"
                },
       data: payload });
-    const jsonresponse = await response.json();
-
-    return jsonresponse;
+  
+    return response;
   }
 
 
@@ -37,9 +36,7 @@ export class BaseClient
                },
       data: payload });
 
-        const jsonresponse = await response.json();
-
-        return jsonresponse;
+        return response;
     }
 
     async partialupdateRequest(endpoint,payload,token)
@@ -53,9 +50,7 @@ export class BaseClient
                },
       data: payload });
 
-        const jsonresponse = await response.json();
-
-        return jsonresponse;
+        return response;
     }
 
       async deleteRequest(endpoint,token)
