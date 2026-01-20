@@ -23,6 +23,7 @@ pipeline{
             }
         }
 
+        stage('postexecution'){
         post {
         always {
             // Archives the results so they are visible directly in the Jenkins UI
@@ -37,6 +38,7 @@ pipeline{
             ])
         }
     }
+        }
     
     }
 }
