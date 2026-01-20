@@ -23,24 +23,6 @@ pipeline{
             }
         }
 
-        stage('postexecution'){
-        steps{
-        post {
-        always {
-            // Archives the results so they are visible directly in the Jenkins UI
-            allure includeProperties: false, results: [[path: 'allure-results']]
-            publishHTML(target: [
-                allowMissing: false,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'allure-report',
-                reportFiles: 'index.html',
-                reportName: 'Playwright HTML Report'
-            ])
-        }
-        }
-        }
-        }
-    
+        
     }
 }
