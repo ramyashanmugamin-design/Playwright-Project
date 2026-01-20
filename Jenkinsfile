@@ -24,6 +24,7 @@ pipeline{
         }
 
         stage('postexecution'){
+        steps{
         post {
         always {
             // Archives the results so they are visible directly in the Jenkins UI
@@ -37,7 +38,8 @@ pipeline{
                 reportName: 'Playwright HTML Report'
             ])
         }
-    }
+        }
+        }
         }
     
     }
