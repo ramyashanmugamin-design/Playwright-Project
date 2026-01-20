@@ -1,0 +1,32 @@
+{
+"create":
+{
+    "firstname" : "Ramya",
+    "lastname" : "Shanmugam",
+    "totalprice" : 120,
+    "depositpaid" : true,
+    "bookingdates" : {
+        "checkin" : "2026-01-19",
+        "checkout" : "2026-01-26"
+    },
+    "additionalneeds" : "Breakfast"
+},
+
+"update":
+{
+    "firstname" : "Rammi",
+    "lastname" : "Shan",
+    "totalprice" : 150,
+    "depositpaid" : false,
+    "bookingdates" : {
+        "checkin" : "2026-03-19",
+        "checkout" : "2026-04-26"
+    },
+    "additionalneeds" : "Dinner"
+},
+"Partialupdate":
+{
+    "firstname" : "Ramya shanmugam",
+    "lastname" : "S"
+}
+}
